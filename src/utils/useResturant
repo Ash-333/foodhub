@@ -1,0 +1,26 @@
+import { useEffect, useState } from "react"
+import { MENU_URL } from "./constants"
+
+const useResturant=(resId)=>{
+
+    const [restarauntInfo,setResturant]=useState([])
+    const [menu,setMenu]=useState([])
+
+    useEffect(()=>{
+        api();
+    },[])
+
+
+    const api=async ()=>{
+        const response=await fetch(MENU_URL+resId)
+        const data=await response.json()
+        setResturant(data?.data?.cards[2]?.card?.card?.info)
+        //console.log(data.data?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR.cards)
+        setMenu(data.data.cards[5]?.groupedCard?.cardGroupMap?.REGULAR.cards)
+    }
+
+    
+    return {restarauntInfo,menu}
+}
+
+export default useResturant
